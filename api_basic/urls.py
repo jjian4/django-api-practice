@@ -1,6 +1,6 @@
 from django.urls import path, include
 # from .views import article_list, article_detail
-from .views import ArticleAPIView, ArticleDetailAPIView, GenericArticleAPIView, GenericArticleDetailAPIView, ArticleViewSet, GenericArticleViewSet
+from .views import ArticleAPIView, ArticleDetailAPIView, GenericArticleAPIView, GenericArticleDetailAPIView, ArticleViewSet, GenericArticleViewSet, ModelArticleViewSet
 from rest_framework.routers import DefaultRouter
 
 
@@ -10,16 +10,25 @@ router.register('article', ArticleViewSet, basename='article')
 
 # Router for generic viewset
 router2 = DefaultRouter()
-router2.register('article', GenericArticleViewSet, basename='article')
+router2.register('generic/article', GenericArticleViewSet, basename='article')
+
+# Router for model viewset
+router3 = DefaultRouter()
+router3.register('model/article', ModelArticleViewSet, basename='article')
 
 
 urlpatterns = [
 
+    # MODEL VIEWSETS
+    path('viewset/', include(router3.urls)),
+
     # GENERIC VIEWSETS
-    path('genviewset/', include(router2.urls)),
+    path('viewset/', include(router2.urls)),
 
     # VIEWSETS: handles both articles and article detail
     path('viewset/', include(router.urls)),
+
+    # ------------------------------------------------------------
 
     # GENERIC VIEWS
     path('generic/article/', GenericArticleAPIView.as_view()),

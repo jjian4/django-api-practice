@@ -10,6 +10,14 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 
 
+# MODEL VIEW SETS: Basically generic view set but assumes theres GET, POST, PUT, DELETE
+class ModelArticleViewSet(viewsets.ModelViewSet):
+    serializer_class = ArticleSerializer
+    queryset = Article.objects.all()
+
+
+# -------------------------------------------------
+
 # GENERIC VIEW SETS
 class GenericArticleViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
     serializer_class = ArticleSerializer
